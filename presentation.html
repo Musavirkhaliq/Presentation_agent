@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unfolding the Secrets of Protein Structure and Folding</title>
+    <title>Unlocking the Secrets of Protein Structure and Function</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
@@ -12,231 +12,611 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&display=swap');
+
         :root {
-            --background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --text-color: #333333;
-            --accent-color: #3498db;
-            --secondary-color: #2c3e50;
+            --background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --text-color: #ffffff;
+            --accent-color: #0f3460;
+            --secondary-color: #e94560;
+
+            /* Additional elegant color variables */
+            --subtle-accent: rgba(15, 52, 96, 0.2);
+            --highlight-color: #f1c40f;
+            --muted-text: rgba(255, 255, 255, 0.7);
+            --shadow-color: rgba(0, 0, 0, 0.2);
+
+            /* Typography variables */
+            --heading-font: 'Cormorant Garamond', 'Playfair Display', serif;
+            --body-font: 'Poppins', sans-serif;
+            --code-font: 'Fira Code', monospace;
+
+            /* Spacing variables */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 4rem;
+
+            /* Animation variables */
+            --transition-fast: 0.3s ease;
+            --transition-medium: 0.5s ease;
+            --transition-slow: 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: var(--body-font);
             background: var(--background);
             color: var(--text-color);
             overflow: hidden;
-            transition: background 0.5s ease;
+            transition: background var(--transition-medium);
+            line-height: 1.6;
+            font-weight: 300;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        
+
         .presentation-container {
             position: relative;
             width: 100vw;
             height: 100vh;
             overflow: hidden;
         }
-        
+
         .slide {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            padding: 4rem 6rem;
+            padding: var(--spacing-xl) var(--spacing-xl);
             opacity: 0;
             transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: all var(--transition-slow);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) transparent;
+            background-size: cover;
+            background-position: center;
         }
-        
+
+        /* Custom scrollbar styling */
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .slide::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .slide::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+
         .slide.active {
             opacity: 1;
             transform: translateY(0);
+            animation: slideFadeIn var(--transition-slow) forwards;
         }
-        
+
+        @keyframes slideFadeIn {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--subtle-accent) 0%, transparent 50%);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
         .slide-header {
             position: absolute;
-            top: 2rem;
-            right: 2rem;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
         }
-        
+
         .slide-number {
             font-size: 1rem;
-            opacity: 0.5;
+            opacity: 0.6;
             font-weight: 300;
+            font-family: var(--heading-font);
+            letter-spacing: 1px;
+            background: var(--subtle-accent);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 20px;
+            min-width: 2.5rem;
+            text-align: center;
         }
-        
+
         .slide-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
+            font-family: var(--heading-font);
+            font-size: 3.8rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
             color: var(--accent-color);
             position: relative;
             display: inline-block;
+            max-width: 90%;
+            word-wrap: break-word;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            text-shadow: 1px 1px 2px var(--shadow-color);
         }
-        
+
         .slide-title::after {
             content: '';
             position: absolute;
             bottom: -10px;
             left: 0;
-            width: 80px;
-            height: 4px;
-            background: var(--accent-color);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-color), transparent);
+            transform-origin: left;
+            animation: expandWidth 1.5s ease forwards;
         }
-        
+
+        @keyframes expandWidth {
+            0% { width: 0; opacity: 0; }
+            100% { width: 100px; opacity: 1; }
+        }
+
         .content {
             font-size: 1.25rem;
             line-height: 1.6;
             max-width: 900px;
+            width: 100%;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+            z-index: 1;
         }
-        
+
+        /* Add elegant styling to content elements */
+        .elegant-paragraph {
+            margin-bottom: var(--spacing-md);
+            font-weight: 300;
+            color: var(--text-color);
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .elegant-paragraph:first-letter {
+            font-size: 1.5em;
+            font-weight: 500;
+            color: var(--accent-color);
+            font-family: var(--heading-font);
+        }
+
+        .elegant-list {
+            margin: var(--spacing-md) 0;
+            padding-left: var(--spacing-lg);
+        }
+
+        .elegant-list li {
+            margin-bottom: var(--spacing-sm);
+            position: relative;
+        }
+
+        .elegant-list li::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-color);
+        }
+
+        .nested-list {
+            margin-top: var(--spacing-sm);
+            margin-left: var(--spacing-md);
+        }
+
+        .elegant-quote {
+            border-left: 3px solid var(--accent-color);
+            padding: var(--spacing-md) var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+            background: var(--subtle-accent);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            position: relative;
+        }
+
+        .elegant-quote::before {
+            content: '"';
+            font-family: var(--heading-font);
+            font-size: 4rem;
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            color: var(--accent-color);
+            opacity: 0.2;
+        }
+
+        .elegant-hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .elegant-hr.thick {
+            height: 3px;
+        }
+
+        .elegant-image {
+            margin: var(--spacing-md) 0;
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        .elegant-image img {
+            max-width: 100%;
+            display: block;
+            transition: transform var(--transition-medium);
+        }
+
+        .elegant-image:hover img {
+            transform: scale(1.02);
+        }
+
+        .elegant-image figcaption {
+            padding: var(--spacing-sm);
+            text-align: center;
+            font-style: italic;
+            font-size: 0.9rem;
+            color: var(--muted-text);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: var(--spacing-md) 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .elegant-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+        }
+
+        .elegant-table th, .elegant-table td {
+            padding: var(--spacing-sm) var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--subtle-accent);
+        }
+
+        .elegant-table th {
+            background: var(--subtle-accent);
+            font-weight: 600;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .elegant-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .elegant-table tr:hover {
+            background: var(--subtle-accent);
+        }
+
+        .code-block {
+            margin: var(--spacing-md) 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            position: relative;
+        }
+
+        .code-block code {
+            font-family: var(--code-font);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: block;
+            padding: var(--spacing-md);
+            overflow-x: auto;
+        }
+
+        .line-number {
+            display: inline-block;
+            width: 2rem;
+            text-align: right;
+            color: var(--muted-text);
+            margin-right: var(--spacing-sm);
+            user-select: none;
+        }
+
+        .inline-code {
+            font-family: var(--code-font);
+            background: var(--subtle-accent);
+            padding: 0.1em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .task-list {
+            list-style: none;
+            padding-left: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+
+        .task-item {
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.2rem;
+            height: 1.2rem;
+            border-radius: 50%;
+            margin-right: var(--spacing-sm);
+            background: var(--subtle-accent);
+            color: var(--accent-color);
+            font-size: 0.8rem;
+        }
+
+        .task-item.completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        /* Navigation hints for multi-part slides */
+        .slide-part-indicator {
+            position: absolute;
+            bottom: 4rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            opacity: 0.8;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 12px var(--shadow-color);
+            transform: translateY(0);
+        }
+
+        .slide-part-indicator:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px var(--shadow-color);
+        }
+
         /* Markdown-rendered HTML elements styling */
         .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
             color: var(--secondary-color);
-            font-family: 'Playfair Display', serif;
+            font-family: var(--heading-font);
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
         }
-        
-        .content h1 { font-size: 2.5rem; }
-        .content h2 { font-size: 2rem; }
-        .content h3 { font-size: 1.75rem; }
-        .content h4 { font-size: 1.5rem; }
-        .content h5 { font-size: 1.25rem; }
-        .content h6 { font-size: 1rem; }
-        
+
+        .content h1::after, .content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent-color), transparent);
+        }
+
+        .content h1 {
+            font-size: 2.5rem;
+            margin-top: var(--spacing-xl);
+        }
+
+        .content h2 {
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+
+        .content h3 {
+            font-size: 1.75rem;
+            font-weight: 500;
+        }
+
+        .content h4 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--accent-color);
+            opacity: 0.9;
+        }
+
+        .content h5 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .content h6 {
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         .content p {
-            margin-bottom: 1rem;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.7;
         }
-        
+
         .content a {
             color: var(--accent-color);
             text-decoration: none;
             border-bottom: 1px dotted var(--accent-color);
-            transition: border-bottom 0.3s ease;
+            transition: all var(--transition-fast);
+            position: relative;
+            display: inline-block;
+            padding: 0 2px;
         }
-        
+
         .content a:hover {
             border-bottom: 1px solid var(--accent-color);
+            background: var(--subtle-accent);
+            border-radius: 3px;
         }
-        
+
+        .content a::after {
+            content: '↗';
+            font-size: 0.8em;
+            position: relative;
+            top: -0.5em;
+            opacity: 0;
+            margin-left: 2px;
+            transition: opacity var(--transition-fast);
+        }
+
+        .content a:hover::after {
+            opacity: 1;
+        }
+
         .content strong {
             font-weight: 600;
             color: var(--accent-color);
+            padding: 0 2px;
         }
-        
+
         .content em {
             font-style: italic;
+            color: var(--secondary-color);
         }
-        
-        .content ul, .content ol {
-            margin-left: 2rem;
-            margin-bottom: 1.5rem;
+
+        .content del {
+            text-decoration: line-through;
+            opacity: 0.7;
         }
-        
-        .content li {
-            margin-bottom: 0.5rem;
+
+        /* Lists are now styled with .elegant-list class */
+
+        /* Images are now styled with .elegant-image class */
+
+        /* Blockquotes are now styled with .elegant-quote class */
+
+        /* Code blocks are now styled with .code-block class */
+
+        /* Tables are now styled with .elegant-table class */
+
+        /* Add animation for content elements */
+        .content > * {
+            animation: fadeSlideUp 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
-        
-        .content img {
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            margin: 1.5rem 0;
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        .content blockquote {
-            padding: 1rem 1.5rem;
-            border-left: 4px solid var(--accent-color);
-            background: rgba(255, 255, 255, 0.1);
-            margin: 1.5rem 0;
-            border-radius: 0 8px 8px 0;
-            font-style: italic;
-        }
-        
-        .content pre {
-            background: rgba(0, 0, 0, 0.1);
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1.5rem 0;
-        }
-        
-        .content code {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9em;
-            background: rgba(0, 0, 0, 0.1);
-            padding: 0.2em 0.4em;
-            border-radius: 3px;
-        }
-        
-        .content pre code {
-            background: transparent;
-            padding: 0;
-            font-size: 0.85em;
-            line-height: 1.5;
-        }
-        
-        .content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-        
-        .content table th, .content table td {
-            padding: 0.75rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: left;
-        }
-        
-        .content table th {
-            background: rgba(255, 255, 255, 0.1);
-            font-weight: 600;
-        }
-        
+
         .slide-footer {
             position: absolute;
-            bottom: 2rem;
+            bottom: var(--spacing-lg);
             left: 0;
             width: 100%;
-            padding: 0 6rem;
+            padding: 0 var(--spacing-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
+
         .progress-indicator {
             width: 100%;
             height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
+            background: var(--subtle-accent);
+            border-radius: 4px;
             overflow: hidden;
+            box-shadow: 0 2px 8px var(--shadow-color);
         }
-        
+
         .progress-bar {
             height: 100%;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
+            background: linear-gradient(to right, var(--accent-color), var(--secondary-color));
+            transition: width var(--transition-medium);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.3) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            animation: shimmer 2s infinite;
+            transform: translateX(-100%);
+        }
+
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+
         .controls {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
+            bottom: var(--spacing-lg);
+            right: var(--spacing-lg);
             z-index: 100;
             display: flex;
-            gap: 0.5rem;
+            gap: var(--spacing-xs);
+            background: rgba(0, 0, 0, 0.1);
+            padding: var(--spacing-xs);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px var(--shadow-color);
         }
-        
+
         .control-button {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--subtle-accent);
             color: var(--text-color);
             border: none;
             width: 40px;
@@ -246,64 +626,334 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            transition: all var(--transition-fast);
+            font-size: 0.9rem;
         }
-        
+
         .control-button:hover {
             background: var(--accent-color);
             transform: scale(1.1);
+            color: white;
+            box-shadow: 0 2px 10px var(--shadow-color);
         }
-        
+
+        .control-button:active {
+            transform: scale(0.95);
+        }
+
         .theme-switcher {
             position: fixed;
-            top: 2rem;
-            left: 2rem;
+            top: var(--spacing-lg);
+            left: var(--spacing-lg);
             z-index: 100;
         }
-        
+
         .theme-button {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--subtle-accent);
             color: var(--text-color);
             border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 30px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-fast);
             backdrop-filter: blur(10px);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
         }
-        
+
+        .theme-button::before {
+            content: '🎨';
+            font-size: 1rem;
+        }
+
         .theme-button:hover {
             background: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px var(--shadow-color);
         }
-        
+
+        .theme-button:active {
+            transform: translateY(0);
+        }
+
         /* Animations for content */
         .fade-in {
             animation: fadeIn 1s ease forwards;
+            animation-delay: calc(var(--animation-order, 0) * 0.1s);
+            opacity: 0;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .slide {
-                padding: 2rem;
+
+        /* Elegant transitions between slides */
+        .slide.prev {
+            transform: translateX(-50px);
+            opacity: 0;
+            transition: all var(--transition-slow);
+        }
+
+        .slide.next {
+            transform: translateX(50px);
+            opacity: 0;
+            transition: all var(--transition-slow);
+        }
+
+        /* Elegant background patterns */
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background-image: radial-gradient(circle, var(--subtle-accent) 10%, transparent 10.5%);
+            background-size: 20px 20px;
+            background-position: 0 0;
+            opacity: 0.3;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Responsive adjustments with CSS variables */
+        @media (max-width: 1200px) {
+            :root {
+                --spacing-xl: 3rem;
+                --spacing-lg: 1.5rem;
             }
-            
+
+            .slide {
+                padding: var(--spacing-xl);
+            }
+
+            .slide-title {
+                font-size: 3.2rem;
+                max-width: 95%;
+            }
+
+            .content {
+                font-size: 1.15rem;
+            }
+
+            .elegant-paragraph:first-letter {
+                font-size: 1.3em;
+            }
+        }
+
+        @media (max-width: 992px) {
+            :root {
+                --spacing-xl: 2.5rem;
+                --spacing-lg: 1.25rem;
+                --spacing-md: 0.75rem;
+            }
+
+            .slide {
+                padding: var(--spacing-xl);
+            }
+
+            .slide-title {
+                font-size: 2.8rem;
+            }
+
+            .content {
+                font-size: 1.1rem;
+                max-width: 100%;
+            }
+
+            .slide-footer {
+                padding: 0 var(--spacing-xl);
+            }
+
+            .elegant-quote::before {
+                font-size: 3rem;
+            }
+
+            .slide::after {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --spacing-xl: 2rem;
+                --spacing-lg: 1rem;
+                --spacing-md: 0.5rem;
+            }
+
+            .slide {
+                padding: var(--spacing-xl);
+            }
+
             .slide-title {
                 font-size: 2.5rem;
+                margin-bottom: var(--spacing-md);
             }
-            
+
             .content {
                 font-size: 1rem;
             }
-            
+
             .slide-footer {
-                padding: 0 2rem;
+                padding: 0 var(--spacing-xl);
+                bottom: var(--spacing-lg);
+            }
+
+            .controls {
+                bottom: var(--spacing-lg);
+                right: var(--spacing-lg);
+            }
+
+            .theme-switcher {
+                top: var(--spacing-lg);
+                left: var(--spacing-lg);
+            }
+
+            .elegant-image figcaption {
+                font-size: 0.8rem;
+            }
+
+            .slide::after {
+                width: 150px;
+                height: 150px;
+                background-size: 15px 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            :root {
+                --spacing-xl: 1.5rem;
+                --spacing-lg: 0.75rem;
+                --spacing-md: 0.5rem;
+                --spacing-sm: 0.25rem;
+            }
+
+            .slide {
+                padding: var(--spacing-xl);
+            }
+
+            .slide-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                font-size: 0.9rem;
+            }
+
+            .slide-header {
+                top: var(--spacing-md);
+                right: var(--spacing-md);
+            }
+
+            .controls {
+                bottom: var(--spacing-md);
+                right: var(--spacing-md);
+                gap: 2px;
+                padding: 4px;
+            }
+
+            .theme-switcher {
+                top: var(--spacing-md);
+                left: var(--spacing-md);
+            }
+
+            .control-button {
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem;
+            }
+
+            .theme-button {
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
+
+            .theme-button::before {
+                font-size: 0.9rem;
+            }
+
+            .slide-part-indicator {
+                bottom: var(--spacing-xl);
+                right: var(--spacing-md);
+                font-size: 0.7rem;
+                padding: 4px 8px;
+            }
+
+            .slide::after {
+                width: 100px;
+                height: 100px;
+                background-size: 10px 10px;
+            }
+        }
+
+        /* Handle very small screens and orientation */
+        @media (max-height: 600px), (max-width: 400px) {
+            .slide-title {
+                font-size: 1.8rem;
+                margin-bottom: var(--spacing-sm);
+            }
+
+            .content {
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+
+            .content h1 { font-size: 1.6rem; }
+            .content h2 { font-size: 1.4rem; }
+            .content h3 { font-size: 1.2rem; }
+            .content h4 { font-size: 1rem; }
+            .content h5 { font-size: 0.9rem; }
+            .content h6 { font-size: 0.8rem; }
+
+            .elegant-paragraph:first-letter {
+                font-size: 1.1em;
+            }
+
+            .elegant-quote {
+                padding: var(--spacing-sm);
+            }
+
+            .elegant-quote::before {
+                font-size: 2rem;
+                top: -10px;
+            }
+
+            .slide::after {
+                display: none;
+            }
+        }
+
+        /* Print styles for PDF export */
+        @media print {
+            .slide {
+                page-break-after: always;
+                opacity: 1 !important;
+                transform: none !important;
+                position: relative;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .controls, .theme-switcher, .slide-part-indicator {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .slide-footer {
+                position: relative;
+                margin-top: 2rem;
             }
         }
     </style>
@@ -315,42 +965,39 @@
     <div class="slide-header">
         <span class="slide-number">1</span>
     </div>
-    <h1 class="slide-title">Introduction: The Wonders of Proteins</h1>
+    <h1 class="slide-title">Introduction: The Dynamic World of Proteins</h1>
     <div class="content">
-        <ul>
-  <li>*   <strong>Proteins: The Workhorses of Life</strong></li>
+        <ul class="elegant-list">
+<li><strong>Proteins: The Cell's Workhorses</strong></li>
+<ul class="nested-list">
+<li>Carry out a vast array of essential functions:</li>
+<ul class="nested-list">
+<li>Catalysis (enzymes)</li>
+<li>Transport (hemoglobin)</li>
+<li>Structure (collagen)</li>
+<li>Signaling (hormones, receptors)</li>
+<li>Immunity (antibodies)</li>
+<li>Movement (actin, myosin)</li>
 </ul>
-    *   Essential biomolecules involved in nearly every cellular process.
-<ul>
-  <li>*   <strong>Diversity in Function:</strong></li>
 </ul>
-    *   <strong>Catalysis:</strong> Enzymes (e.g., amylase) accelerate biochemical reactions.
-    *   <strong>Structure:</strong> Provide support and shape (e.g., collagen in connective tissue).
-    *   <strong>Transport:</strong> Carry molecules (e.g., hemoglobin transports oxygen).
-    *   <strong>Signaling:</strong> Transmit information (e.g., hormones like insulin).
-    *   ...and many more!
-<ul>
-  <li>*   <strong>Form Follows Function:</strong></li>
+<li><strong>Structure Dictates Function:</strong></li>
+<ul class="nested-list">
+<li>A protein's 3D shape determines its specific activity.</li>
+<li>Even small changes in structure can dramatically alter function.</li>
+<li>Example: Sickle cell anemia results from a single amino acid change in hemoglobin.</li>
 </ul>
-    *   A protein's 3D structure dictates its specific activity.
-    *   Understanding structure is crucial for understanding function.
-<ul>
-  <li>*   <strong>Overview of This Presentation:</strong></li>
+<li><strong>Presentation Overview:</strong></li>
+<ul class="nested-list">
+<li>Explore the levels of protein structure (primary, secondary, tertiary, quaternary).</li>
+<li>Delve into the forces driving protein folding and stability.</li>
+<li>Understand the link between structure and function.</li>
 </ul>
-    *   Explore the hierarchical levels of protein structure.
-    *   Uncover the forces that drive protein folding.
-    *   Discuss the challenges and complexities of folding.
-<p><strong>Visual Suggestions:</strong></p>
-<ul>
-  <li>*   <strong>Central Image:</strong> A visually appealing 3D rendering of a protein molecule (e.g., lysozyme).  Consider an animated image that shows the folding process.</li>
-  <li>  <strong>Bullet Point Icons:</strong> Use small icons to represent each function (e.g., enzyme for catalysis, building block for structure, truck for transport).</li>
-  <li>  <strong>"Form Follows Function" Graphic:</strong> A simple diagram illustrating how a protein's shape allows it to bind to a specific target molecule.</li>
 </ul>
-
     </div>
+    
     <div class="slide-footer">
         <div class="progress-indicator">
-            <div class="progress-bar" style="width: 1.0%"></div>
+            <div class="progress-bar" style="width: 0%"></div>
         </div>
     </div>
 </div>
@@ -359,47 +1006,19 @@
     <div class="slide-header">
         <span class="slide-number">2</span>
     </div>
-    <h1 class="slide-title">Amino Acids: The Building Blocks</h1>
+    <h1 class="slide-title">Introduction: The Dynamic World of Proteins (Part 2)</h1>
     <div class="content">
-        <ul>
-  <li>*   <strong>Amino Acids: The Foundation of Proteins</strong></li>
-</ul>
-    *   Monomers that polymerize to form polypeptide chains (proteins)
-<ul>
-  <li>*   <strong>The Basic Structure:</strong></li>
-</ul>
-    *   Central carbon (alpha carbon) bonded to:
-        *   Amino group (-NH₂)
-        *   Carboxyl group (-COOH)
-        *   Hydrogen atom (-H)
-        *   Side chain (R group) - <strong>the variable part that defines each amino acid</strong>
-<ul>
-  <li>*   <strong>20 Common Amino Acids:</strong></li>
-</ul>
-    *   Classified based on the properties of their R-groups:
-        *   <strong>Hydrophobic:</strong> Tend to cluster together; important for protein folding and stability.
-            <em>   </em>Example:* Alanine, Valine, Leucine, Isoleucine, Phenylalanine
-        *   <strong>Hydrophilic:</strong> Interact favorably with water.
-            <em>   </em>Example:* Serine, Threonine, Tyrosine, Asparagine, Glutamine
-        *   <strong>Charged:</strong> Carry a positive or negative charge.
-            <em>   </em>Example:* Aspartic acid (negative), Glutamic acid (negative), Lysine (positive), Arginine (positive), Histidine (positive - pH dependent)
-<ul>
-  <li>*   <strong>Side Chain Dictates Properties</strong></li>
-</ul>
-    *   Size, shape, charge, hydrogen-bonding capacity, reactivity determine the role of an amino acid in a protein.
-    *   Hydrophobic interactions, hydrogen bonds, ionic bonds, disulfide bonds are all dependent on these properties.
-<p><strong>Visual Suggestions:</strong></p>
-<ul>
-  <li>*   Diagram of a generic amino acid structure, clearly labeling the amino group, carboxyl group, alpha carbon, hydrogen, and R-group. Use different colors to highlight each group.</li>
-  <li>  A table or chart visually classifying the 20 amino acids by their side chain properties (hydrophobic, hydrophilic, charged), with representative structures or images for each category. Use a color scheme matching the text.</li>
-  <li>  3D molecular models of different amino acids to illustrate the diversity in side chain size and shape.</li>
-  <li>  A short animation showing how hydrophobic amino acids cluster together in an aqueous environment.</li>
-</ul>
-
+        <p class="elegant-paragraph"><strong>Visual Suggestions:</strong>
+<ul class="elegant-list">
+<li><strong>Image:</strong> A collage showcasing diverse protein functions (enzyme catalyzing a reaction, hemoglobin carrying oxygen, collagen fibers, antibody binding to an antigen).</li>
+<li><strong>Animation/Diagram:</strong> A simple animation illustrating the levels of protein structure.</li>
+<li><strong>Molecular visualization:</strong> A 3D rendering of hemoglobin, highlighting the single amino acid change that causes sickle cell anemia.</li>
+</ul></p>
     </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
     <div class="slide-footer">
         <div class="progress-indicator">
-            <div class="progress-bar" style="width: 2.0%"></div>
+            <div class="progress-bar" style="width: 0%"></div>
         </div>
     </div>
 </div>
@@ -408,38 +1027,26 @@
     <div class="slide-header">
         <span class="slide-number">3</span>
     </div>
-    <h1 class="slide-title">From Amino Acids to Polypeptides: Peptide Bond Formation</h1>
+    <h1 class="slide-title">Proteins: Polymers of Amino Acids</h1>
     <div class="content">
-        <ul>
-  <li>*   <strong>Building Blocks: Amino Acids</strong></li>
+        <ul class="elegant-list">
+<li><strong>Proteins: Polymers of Amino Acids</strong></li>
+<li><strong>The Building Blocks:</strong></li>
+<ul class="nested-list">
+<li>Proteins are polymers constructed from amino acid monomers.</li>
+<li>Think of them as long chains where each link is an amino acid.</li>
 </ul>
-    *   Amino acids are the monomers of proteins.
-    *   Each amino acid has an amino group, a carboxyl group, and a unique side chain (R-group).
-    <em>   </em>Visual Suggestion: Show a generic amino acid structure highlighting the amino, carboxyl, and R-group.*
-<ul>
-  <li>*   <strong>Peptide Bond Formation</strong></li>
+<li><strong>20 Common Amino Acids:</strong></li>
+<ul class="nested-list">
+<li>Nature utilizes 20 different amino acids to build a vast array of proteins.</li>
+<li>Each amino acid has a unique side chain, also known as an R-group.</li>
 </ul>
-    *   Amino acids are linked by <strong>peptide bonds</strong> during protein synthesis.
-    <em>   </em>Visual Suggestion: A diagram illustrating the dehydration reaction between two amino acids forming a peptide bond, with clear labels of reactants and products (water).*
-    *   This is a <strong>dehydration reaction</strong> (water molecule is removed).
-    *   The carboxyl group of one amino acid reacts with the amino group of another.
-<ul>
-  <li>*   <strong>From Gene to Protein: The Central Dogma</strong></li>
 </ul>
-    *   <strong>DNA -> RNA -> Protein</strong>
-    *   Peptide bond formation is a key step in translation, where the genetic code in mRNA is used to assemble a protein.
-    <em>   </em>Visual Suggestion: Simple flowchart illustrating the central dogma.*
-<ul>
-  <li>*   <strong>Primary Structure</strong></li>
-</ul>
-    *   The <strong>amino acid sequence</strong> is the protein's primary structure.
-    *   This sequence dictates the higher-order structures (secondary, tertiary, quaternary) and ultimately, the protein's function.
-    <em>   </em>Visual Suggestion: Show a short amino acid sequence (e.g., Ala-Gly-Ser-...) and emphasize that this is the protein's "blueprint."*
-
     </div>
+    
     <div class="slide-footer">
         <div class="progress-indicator">
-            <div class="progress-bar" style="width: 3.0%"></div>
+            <div class="progress-bar" style="width: 0%"></div>
         </div>
     </div>
 </div>
@@ -448,53 +1055,27 @@
     <div class="slide-header">
         <span class="slide-number">4</span>
     </div>
-    <h1 class="slide-title">Hierarchical Protein Structure: Primary and Secondary</h1>
+    <h1 class="slide-title">Proteins: Polymers of Amino Acids (Part 2)</h1>
     <div class="content">
-        <h3>Hierarchical Protein Structure: Primary & Secondary</h3>
-<ul>
-  <li>*   <strong>Primary (1°) Structure: The Blueprint</strong></li>
+        <ul class="elegant-list">
+<li><strong>R-Groups Dictate Behavior:</strong></li>
+<ul class="nested-list">
+<li>The properties of these R-groups (hydrophobic, hydrophilic, acidic, basic) determine how a protein folds and interacts.</li>
+<li><strong>Example:</strong> Hydrophobic R-groups tend to cluster in the protein's interior, away from water.</li>
+<li><strong>Example:</strong> Hydrophilic R-groups are found on the outside.</li>
 </ul>
-    *   Linear sequence of amino acids linked by peptide bonds.
-    *   Dictated by the gene sequence.
-    *   Determines all subsequent levels of structure.
-    *   Analogy: Like letters forming a word.
-    <em>   </em>Visual Suggestion: Show a short amino acid sequence, highlight the peptide bonds.*
-<ul>
-  <li>*   <strong>Secondary (2°) Structure: Local Folding</strong></li>
+<li><strong>Visual Suggestion:</strong></li>
+<ul class="nested-list">
+<li>Show a diagram of a polypeptide chain, highlighting the amino acids and R-groups.</li>
+<li>Include a table showing the 20 common amino acids with example structures.</li>
+<li>Show a chart showing the relative prevalence of each amino acid.</li>
 </ul>
-    *   Local, repeating patterns of folding in the polypeptide chain.
-    *   Primarily stabilized by <strong>hydrogen bonds</strong> between backbone atoms (C=O and N-H).
-    *   Main types:
-        *   <strong>α-Helices:</strong> Coiled structure with H-bonds along the helix axis. Example: Keratin.
-        *   <strong>β-Sheets:</strong> Extended strands arranged side-by-side, H-bonds between strands. Can be parallel or anti-parallel. Example: Fibroin (silk).
-        *   <strong>Loops/Turns:</strong> Connect α-helices and β-sheets; often found on the protein surface.
-    <em>   </em>Visual Suggestion: Show 3D models of alpha helix and beta sheet structures with hydrogen bonds highlighted.*
-<ul>
-  <li>*   <strong>The Protein Backbone: Foundation for Folding</strong></li>
 </ul>
-    *   Repeating sequence of N-Cα-C atoms in the polypeptide chain.
-    *   Side chains extend outward from the backbone.
-    <em>   </em>Visual Suggestion: A simplified diagram of the polypeptide backbone, labeling the N, Cα, C atoms.*
-<ul>
-  <li>*   <strong>Backbone Torsion Angles: Phi (Φ), Psi (Ψ), and Omega (ω)</strong></li>
-</ul>
-    *   Describe the rotation around the bonds in the polypeptide backbone.
-    *   <strong>Phi (Φ):</strong> Rotation around the N-Cα bond.
-    *   <strong>Psi (Ψ):</strong> Rotation around the Cα-C bond.
-    *   <strong>Omega (ω):</strong> Rotation around the peptide bond (C-N), usually 180° (trans conformation).
-    <em>   </em>Visual Suggestion: A diagram showing the polypeptide backbone with Phi, Psi, and Omega angles clearly labeled.*
-<ul>
-  <li>*   <strong>Ramachandran Plot: Allowed Conformations</strong></li>
-</ul>
-    *   A plot of Phi (Φ) vs. Psi (Ψ) angles.
-    *   Shows the sterically allowed conformations for a polypeptide backbone.
-    *   Different regions of the plot correspond to different secondary structures (α-helix, β-sheet).
-    <em>   </em>Visual Suggestion: A Ramachandran plot showing the regions corresponding to alpha-helices, beta-sheets, and other conformations. Overlay a few data points from a real protein.*
-
     </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
     <div class="slide-footer">
         <div class="progress-indicator">
-            <div class="progress-bar" style="width: 4.0%"></div>
+            <div class="progress-bar" style="width: 0%"></div>
         </div>
     </div>
 </div>
@@ -503,40 +1084,26 @@
     <div class="slide-header">
         <span class="slide-number">5</span>
     </div>
-    <h1 class="slide-title">Hierarchical Protein Structure: Tertiary and Quaternary</h1>
+    <h1 class="slide-title">From Amino Acids to Polypeptides: Peptide Bonds and...</h1>
     <div class="content">
-        <ul>
-  <li>*   <strong>Tertiary Structure: The 3D Fold</strong></li>
+        <ul class="elegant-list">
+<li><strong>Building Blocks: Amino Acids</strong></li>
+<ul class="nested-list">
+<li>Amino acids are the monomers of proteins.</li>
+<li>Each amino acid has an amino group, carboxyl group, and a unique side chain (R-group).</li>
 </ul>
-    <em>   Overall 3D shape of a </em>single* polypeptide chain.
-    *   Determined by interactions between amino acid side chains (R-groups):
-        *   Hydrophobic interactions, hydrogen bonds, ionic bonds, disulfide bridges.
-    <em>   </em>Visual:* Show a 3D ribbon diagram of a protein (e.g., myoglobin) highlighting different secondary structure elements and side chain interactions.
-<ul>
-  <li>*   <strong>Quaternary Structure: Assembly Required</strong></li>
+<li><strong>Peptide Bond Formation</strong></li>
+<ul class="nested-list">
+<li>Amino acids are linked together by peptide bonds.</li>
+<li>Peptide bonds are formed via dehydration reaction (removal of H₂O).</li>
+<li>This creates a polypeptide chain (a chain of amino acids).</li>
 </ul>
-    <em>   Arrangement of </em>multiple* polypeptide chains (subunits) to form a functional protein complex.
-    *   Subunits can be identical or different.
-    *   Stabilized by similar interactions as tertiary structure.
-    <em>   </em>Visual:* Show a cartoon representation of a protein with quaternary structure, highlighting individual subunits in different colors.
-<ul>
-  <li>*   <strong>Examples of Quaternary Structures:</strong></li>
 </ul>
-    *   <strong>Hemoglobin:</strong> Transports oxygen in red blood cells; consists of four subunits (two α-globin and two β-globin).
-        <em>   </em>Visual:* Zoom in on hemoglobin, showing heme groups bound to each subunit.
-    *   <strong>Antibodies:</strong> Immune proteins composed of heavy and light chains.
-         <em>  </em>Visual:* Simple diagram of an antibody with labeled chains.
-<ul>
-  <li>*   <strong>Structure Dictates Function</strong></li>
-</ul>
-    <em>   Primary, secondary, tertiary, and quaternary structures </em>work together* to define a protein's unique 3D shape.
-    *   This shape determines its specific function (e.g., enzyme catalysis, binding to other molecules).
-    <em>   </em>Visual:* A simple diagram illustrating the hierarchical nature of protein structure, showing how each level builds upon the previous one to determine function.  Include arrows indicating "Primary -> Secondary -> Tertiary -> Quaternary -> Function".
-
     </div>
+    
     <div class="slide-footer">
         <div class="progress-indicator">
-            <div class="progress-bar" style="width: 5.0%"></div>
+            <div class="progress-bar" style="width: 0%"></div>
         </div>
     </div>
 </div>
@@ -545,46 +1112,27 @@
     <div class="slide-header">
         <span class="slide-number">6</span>
     </div>
-    <h1 class="slide-title">Forces Driving Protein Folding</h1>
+    <h1 class="slide-title">From Amino Acids to Polypeptides: Peptide Bonds and...</h1>
     <div class="content">
-        <p><em>Forces Driving Protein Folding</em></p>
-<ul>
-  <li>*   <strong>Hydrogen Bonds:</strong></li>
+        <ul class="elegant-list">
+<li><strong>Protein Synthesis: Translation</strong></li>
+<ul class="nested-list">
+<li>The process where mRNA is decoded to produce a specific polypeptide.</li>
+<li>Occurs on ribosomes.</li>
+<li>Follows the central dogma: DNA → RNA → Protein</li>
 </ul>
-    *   Backbone H-bonds stabilize secondary structures (α-helices & β-sheets).
-    *   Side-chain H-bonds contribute to tertiary structure stability.
-    <em>   </em>Visual:* Show a diagram of hydrogen bonds in an alpha helix and between side chains in a folded protein.
-<ul>
-  <li>*   <strong>Disulfide Bridges:</strong></li>
+<li><strong>Genetic Encoding</strong></li>
+<ul class="nested-list">
+<li>The sequence of amino acids in a polypeptide is determined by the sequence of codons in mRNA.</li>
+<li>Each codon (3 nucleotides) specifies a particular amino acid.</li>
 </ul>
-    *   Covalent bonds between cysteine residues (-S-S-).
-    *   Important for stabilizing tertiary and quaternary structures.
-    *   Common in extracellular proteins.
-    <em>   </em>Visual:* Illustrate disulfide bond formation between two cysteine residues.
-<ul>
-  <li>*   <strong>Hydrophobic Packing:</strong></li>
 </ul>
-    *   Hydrophobic amino acids cluster in the protein core, away from water.
-    *   Major driving force for folding.
-    *   Increases entropy of water molecules.
-    <em>   </em>Visual:* Depict a protein with hydrophobic residues (e.g., leucine, valine) clustered in the interior.
-<ul>
-  <li>*   <strong>Electrostatic Interactions:</strong></li>
-</ul>
-    *   Attraction and repulsion between charged residues
-    *   Important for stabilizing tertiary structure.
-    <em>   </em>Visual:* Show positive and negative charges interacting between residues.
-<ul>
-  <li>*   <strong>Forces Act in Concert:</strong></li>
-</ul>
-    *   No single force acts in isolation.
-    *   Together, these interactions determine the unique and stable 3D structure of a protein.
-    <em>   </em>Visual:* A schematic showing all forces acting on a single folded protein. Illustrate how these are all interconnected.
-
+<strong>Visual Suggestions:</strong>
     </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
     <div class="slide-footer">
         <div class="progress-indicator">
-            <div class="progress-bar" style="width: 6.0%"></div>
+            <div class="progress-bar" style="width: 0%"></div>
         </div>
     </div>
 </div>
@@ -593,33 +1141,20 @@
     <div class="slide-header">
         <span class="slide-number">7</span>
     </div>
-    <h1 class="slide-title">The Protein Folding Problem: Levinthal's Paradox</h1>
+    <h1 class="slide-title">From Amino Acids to Polypeptides: Peptide Bonds and...</h1>
     <div class="content">
-        <ul>
-  <li>*   <strong>Levinthal's Paradox: The Folding Conundrum</strong></li>
+        <ul class="elegant-list">
+<li>Diagram illustrating the structure of a generic amino acid (amino group, carboxyl group, R-group).</li>
+<li>Animation or illustration of peptide bond formation between two amino acids.</li>
+<li>Simplified diagram of protein synthesis (translation) showing mRNA, ribosome, and tRNA bringing amino acids.</li>
+<li>Illustration of the central dogma (DNA -&gt; RNA -&gt; Protein).</li>
+<li>Image/Graphic showing the sequence of codons in mRNA corresponds to amino acids.</li>
 </ul>
-    <em>   Proteins can't possibly sample </em>all* conformations to find their native (functional) state. Imagine a protein with 100 amino acids, each with just 3 possible conformations. That's 3<sup>100</sup> (or roughly 5 x 10<sup>47</sup>) possibilities!
-    *   Even at incredibly fast sampling rates, it would take far longer than the age of the universe to try every conformation. This contradicts the fact that proteins fold spontaneously in seconds or minutes.
-    *   <strong>The implication:</strong> Proteins don't fold randomly!
-<ul>
-  <li>*   <strong>Specific Folding Pathways</strong></li>
-</ul>
-    *   Proteins fold via defined pathways, guided by their amino acid sequence.
-    *   These pathways involve:
-        *   Formation of local secondary structures (alpha-helices, beta-sheets).
-        *   Hydrophobic collapse (burying hydrophobic amino acids in the protein's core).
-    *   The amino acid sequence encodes the information needed to guide the protein along a specific folding route.
-<ul>
-  <li>*   <strong>Visual Suggestion:</strong></li>
-</ul>
-    *   A diagram contrasting random conformational sampling vs. a funnel-like energy landscape illustrating guided folding pathways. Show a protein going down the funnel to find the correct folding pathway.
-    *   A simple calculation demonstrating the immense number of possible conformations (e.g., with the 3<sup>100</sup> example) and contrasting that time frame with how long it actually takes for a protein to fold.
-    *   Show a visual representation of Anfinsen's experiment to reiterate that the amino acid sequence contains all the information needed to specify 3D structure.
-
     </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
     <div class="slide-footer">
         <div class="progress-indicator">
-            <div class="progress-bar" style="width: 7.000000000000001%"></div>
+            <div class="progress-bar" style="width: 0%"></div>
         </div>
     </div>
 </div>
@@ -628,42 +1163,29 @@
     <div class="slide-header">
         <span class="slide-number">8</span>
     </div>
-    <h1 class="slide-title">Anfinsen's Experiment: Sequence Determines Structure</h1>
+    <h1 class="slide-title">Levels of Protein Structure: A Hierarchical Organization</h1>
     <div class="content">
-        <ul>
-  <li>*   <strong>Central Dogma in Action:</strong></li>
+        <ul class="elegant-list">
+<li><strong>A Hierarchical Organization</strong></li>
+<ul class="nested-list">
+<li>Proteins are meticulously structured at four distinct levels:</li>
+<ul class="nested-list">
+<li><strong>Primary (1°):</strong> The linear amino acid sequence. <em>Think of it as the order of letters in a word.</em></li>
+<li><strong>Secondary (2°):</strong> Localized, repeating patterns like α-helices and β-sheets, stabilized by hydrogen bonds. <em>Like common letter combinations such as "ing" or "tion".</em></li>
+<li><strong>Tertiary (3°):</strong> The overall 3D shape of a single polypeptide chain, shaped by various interactions between R-groups. <em>How the whole word folds up in 3D space.</em></li>
+<li><strong>Quaternary (4°):</strong> The arrangement of multiple polypeptide chains (subunits) in a multi-subunit protein. <em>How multiple words combine to form a sentence.</em></li>
 </ul>
-    *   Anfinsen proved sequence dictates structure.
-<ul>
-  <li>*   <strong>The Experiment:</strong></li>
+<li><strong>Key Interactions:</strong></li>
+<ul class="nested-list">
+<li>Hydrogen bonds, hydrophobic interactions, disulfide bridges, ionic bonds.</li>
 </ul>
-    *   Ribonuclease (enzyme) denatured (unfolded) using urea and reducing agent.
-    <em>   Upon removal of denaturants, ribonuclease </em>spontaneously* refolded to its native, active state.
-<ul>
-  <li>*   <strong>Key Finding:</strong></li>
 </ul>
-    *   The amino acid sequence contains all the information needed to determine the protein's 3D structure and function.
-<ul>
-  <li>*   <strong>Implications:</strong></li>
 </ul>
-    *   Proteins, in theory, can fold correctly on their own.
-    *   Revolutionized our understanding of protein folding
-<ul>
-  <li>*   <strong>Important Note:</strong></li>
-</ul>
-    <em>   Many proteins </em>require<em> assistance from chaperone proteins for proper folding </em>in vivo*.
-<p><strong>Visual Suggestions:</strong></p>
-<ul>
-  <li>*   <strong>Before/After Diagram:</strong> Show a cartoon of ribonuclease in its folded state, then unfolded (denatured), then refolded back to its native state.</li>
-  <li>  <strong>Chemical Structures:</strong> Briefly show the structure of urea and a reducing agent (e.g., beta-mercaptoethanol) used in the experiment.</li>
-  <li>  <strong>Funnel Diagram:</strong> Depict the protein folding energy landscape as a funnel to illustrate how a protein finds its native state.</li>
-  <li>  <strong>Chaperone Protein Visual:</strong> Image or simple diagram of a chaperone protein assisting a misfolded protein.</li>
-</ul>
-
     </div>
+    
     <div class="slide-footer">
         <div class="progress-indicator">
-            <div class="progress-bar" style="width: 8.0%"></div>
+            <div class="progress-bar" style="width: 0%"></div>
         </div>
     </div>
 </div>
@@ -672,42 +1194,20 @@
     <div class="slide-header">
         <span class="slide-number">9</span>
     </div>
-    <h1 class="slide-title">Thermodynamics of Protein Folding: Energy Landscapes</h1>
+    <h1 class="slide-title">Levels of Protein Structure: A Hierarchical Organization...</h1>
     <div class="content">
-        <ul>
-  <li>*   <strong>Protein Folding: A Thermodynamic Imperative</strong></li>
+        <ul class="elegant-list">
+<li><strong>3D Conformation Dictates Function:</strong> Each level contributes to the final 3D structure, which directly determines the protein's specific biological activity.</li>
+<ul class="nested-list">
+<li><strong>Why it Matters:</strong> Understanding these levels is crucial for comprehending protein folding, stability, and function.</li>
 </ul>
-    *   Spontaneous process driven by thermodynamics. Proteins seek the lowest free energy state.
-    *   Analogy: Think of a ball rolling downhill – it's going to find the lowest point.
-<ul>
-  <li>*   <strong>Energy Landscapes: A Visual Metaphor</strong></li>
 </ul>
-    *   Represent the energy of a protein as a function of its conformation.
-    *   Each point on the landscape represents a different possible 3D structure.
-    *   The height of the landscape represents the energy of that conformation.
-<ul>
-  <li>*   <strong>The Funnel Model: Guiding the Fold</strong></li>
-</ul>
-    *   A folding funnel depicts the overall trend of decreasing energy as the protein folds.
-    *   Proteins don't explore all possible conformations randomly (Levinthal's Paradox solution!).
-    *   They are guided down the funnel towards lower energy states.
-    <em>   </em>Visual:* A cartoon of a folding funnel, showing multiple pathways converging to a single native state at the bottom.
-<ul>
-  <li>*   <strong>Native State: The Energy Minimum</strong></li>
-</ul>
-    *   The native state is the most thermodynamically stable conformation.
-    *   Represents the global minimum on the energy landscape.
-    *   Essential for proper function.
-    <em>   </em>Visual:* Highlight the bottom of the funnel in the previous cartoon, labeling it "Native State".
-<ul>
-  <li>*   <strong>Implications</strong></li>
-</ul>
-    *   Understanding energy landscapes helps us understand misfolding and aggregation diseases.
-
+    <strong>Visual Suggestions:</strong>
     </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
     <div class="slide-footer">
         <div class="progress-indicator">
-            <div class="progress-bar" style="width: 9.0%"></div>
+            <div class="progress-bar" style="width: 0%"></div>
         </div>
     </div>
 </div>
@@ -716,51 +1216,937 @@
     <div class="slide-header">
         <span class="slide-number">10</span>
     </div>
-    <h1 class="slide-title">Conclusion: Protein Structure and Folding - A Recap</h1>
+    <h1 class="slide-title">Levels of Protein Structure: A Hierarchical Organization...</h1>
     <div class="content">
-        <ul>
-  <li>*   <strong>Proteins: Essential & Hierarchical</strong></li>
+        <ul class="elegant-list">
+<li><strong>Infographic:</strong> A visually appealing diagram showcasing the four levels of protein structure, building upon each other.</li>
+<ul class="nested-list">
+<li><strong>Molecular Models:</strong> Display 3D models of proteins at each level, highlighting key features (e.g., alpha-helix in secondary, overall fold in tertiary).</li>
+<li><strong>Examples:</strong> Show examples of proteins that demonstrate each level of structure (e.g., Insulin with quaternary structure).</li>
 </ul>
-    *   Vital biomolecules with diverse functions.
-    *   Structure dictates function (Enzymes, Antibodies, Structural Proteins).
-    *   Organized into four levels: Primary, Secondary, Tertiary, and Quaternary.
-<p>    <em>Visual: Image depicting the four levels of protein structure.</em></p>
-<ul>
-  <li>*   <strong>Sequence → Structure → Function</strong></li>
 </ul>
-    <em>   Amino acid sequence (primary structure) </em>determines* the final 3D shape.
-    *   Anfinsen's experiment: sequence contains all necessary info for folding.
-<p>    <em>Visual: Diagram illustrating Anfinsen's experiment (denaturation and refolding of RNase A).</em></p>
-<ul>
-  <li>*   <strong>Forces That Drive Folding</strong></li>
-</ul>
-    *   Noncovalent interactions: Hydrogen bonds, hydrophobic effect, van der Waals forces.
-    *   Covalent disulfide bridges (between cysteine residues).
-    *   Result: stable, functional 3D conformation.
-<p>    <em>Visual: Illustration highlighting different types of interactions that stabilize protein structure.</em></p>
-<ul>
-  <li>*   <strong>Why This Matters</strong></li>
-</ul>
-    *   Understanding protein folding is crucial for:
-        *   Understanding disease mechanisms.
-        *   Developing targeted therapies.
-<ul>
-  <li>*   <strong>Further Exploration</strong></li>
-</ul>
-    *   Research protein misfolding diseases: Alzheimer's, Parkinson's, Cystic Fibrosis.
-    *   Explore the use of chaperones in preventing misfolding.
-<p>    <em>Visual: A collage of images representing protein misfolding diseases like Alzheimer's and Parkinson's, alongside a molecular model of a chaperone protein.</em>
-</p>
     </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
     <div class="slide-footer">
         <div class="progress-indicator">
-            <div class="progress-bar" style="width: 10.0%"></div>
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-11" data-slide-number="11">
+    <div class="slide-header">
+        <span class="slide-number">11</span>
+    </div>
+    <h1 class="slide-title">Primary Structure: The Amino Acid Sequence</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>The Blueprint of a Protein:</strong></li>
+<ul class="nested-list">
+<li>The primary structure is the <strong>linear sequence of amino acids</strong> in a polypeptide chain.</li>
+<li>Think of it as the protein's name and address, encoded in a specific order.</li>
+</ul>
+<li><strong>Genetic Code Dictates Sequence:</strong></li>
+<ul class="nested-list">
+<li>This sequence is determined by the <strong>genetic code</strong> within DNA.</li>
+<li>DNA (gene) -&gt; mRNA -&gt; Protein (amino acid sequence).</li>
+</ul>
+</ul>
+    </div>
+    
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-12" data-slide-number="12">
+    <div class="slide-header">
+        <span class="slide-number">12</span>
+    </div>
+    <h1 class="slide-title">Primary Structure: The Amino Acid Sequence (Part 2)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Sequence Determines Structure &amp; Function:</strong></li>
+<ul class="nested-list">
+<li>The primary structure <strong>dictates higher-order structures</strong> (secondary, tertiary, quaternary).</li>
+<li>The amino acid sequence determines how the protein folds and interacts with other molecules.</li>
+</ul>
+<li><strong>Small Changes, Big Impact:</strong></li>
+<ul class="nested-list">
+<li>Even a <strong>single amino acid change</strong> can have significant consequences for protein function.</li>
+<li><strong>Example:</strong> Sickle cell anemia – a single amino acid change (Glutamate to Valine) in hemoglobin leads to misshapen red blood cells.</li>
+</ul>
+</ul>
+<strong>Visual Suggestions:</strong>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-13" data-slide-number="13">
+    <div class="slide-header">
+        <span class="slide-number">13</span>
+    </div>
+    <h1 class="slide-title">Primary Structure: The Amino Acid Sequence (Part 3)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Illustration:</strong> A simple diagram of a polypeptide chain showing amino acids linked by peptide bonds. Highlight the N-terminus and C-terminus.</li>
+<li><strong>Image:</strong> A visual representation of the central dogma (DNA -&gt; RNA -&gt; Protein).</li>
+<li><strong>Graphic:</strong> A comparison of normal red blood cells and sickle cells with a highlighted amino acid sequence difference of Hb protein to illustrate the impact of a single amino acid change.</li>
+<li><strong>Animation (Optional):</strong> A short animation showing how the amino acid sequence "codes" for folding into a 3D structure.</li>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-14" data-slide-number="14">
+    <div class="slide-header">
+        <span class="slide-number">14</span>
+    </div>
+    <h1 class="slide-title">Secondary Structure: Local Folding Patterns</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Local Folding Patterns: Secondary Structure</strong></li>
+<li><strong>Definition:</strong></li>
+<ul class="nested-list">
+<li>Regular, repeating local structures</li>
+<li>Stabilized by <strong>hydrogen bonds</strong> between backbone atoms (N-H and C=O groups)</li>
+<li>Independent of R-group interactions</li>
+</ul>
+</ul>
+    </div>
+    
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-15" data-slide-number="15">
+    <div class="slide-header">
+        <span class="slide-number">15</span>
+    </div>
+    <h1 class="slide-title">Secondary Structure: Local Folding Patterns (Part 2)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Common Types:</strong></li>
+<ul class="nested-list">
+<li><strong>α-Helices:</strong></li>
+<ul class="nested-list">
+<li>Right-handed coil</li>
+<li>3.6 amino acids per turn</li>
+<li>Hydrogen bonds between every 4th amino acid</li>
+<li>Example: Myoglobin, Ferritin</li>
+</ul>
+<li><strong>β-Sheets:</strong></li>
+<ul class="nested-list">
+<li>Extended polypeptide strands</li>
+<li>Hydrogen bonds between strands</li>
+<li>Can be parallel or antiparallel</li>
+<li>Example: Immunoglobulin, Fibroin (silk)</li>
+</ul>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-16" data-slide-number="16">
+    <div class="slide-header">
+        <span class="slide-number">16</span>
+    </div>
+    <h1 class="slide-title">Secondary Structure: Local Folding Patterns (Part 3)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Importance:</strong></li>
+<ul class="nested-list">
+<li>Provide a structural framework for the protein</li>
+<li>Influence overall 3D (tertiary) structure</li>
+<li>Contribute to protein stability</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-17" data-slide-number="17">
+    <div class="slide-header">
+        <span class="slide-number">17</span>
+    </div>
+    <h1 class="slide-title">Secondary Structure: Local Folding Patterns (Part 4)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Visual Suggestions:</strong></li>
+<ul class="nested-list">
+<li>Diagrams of alpha-helix and beta-sheet structures, clearly showing hydrogen bonds.</li>
+<li>3D models of proteins highlighting alpha-helices and beta-sheets (e.g., myoglobin with prominent helices, or an antibody with beta-sheets).</li>
+<li>Cartoon representations emphasizing the repeating nature of secondary structures.</li>
+<li>Color-coding to differentiate between alpha-helices and beta-sheets in a protein structure.</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-18" data-slide-number="18">
+    <div class="slide-header">
+        <span class="slide-number">18</span>
+    </div>
+    <h1 class="slide-title">Tertiary Structure: The Overall 3D Shape</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>The Overall 3D Shape</strong></li>
+<ul class="nested-list">
+<li>Tertiary structure is the complete 3D arrangement of <em>all</em> atoms in a single polypeptide chain.</li>
+<li>Driven by interactions between amino acid side chains ("R-groups").</li>
+</ul>
+<li><strong>Key Interactions:</strong></li>
+<ul class="nested-list">
+<li><strong>Hydrophobic Interactions:</strong> Nonpolar side chains cluster together to avoid water.</li>
+<ul class="nested-list">
+<li><em>Visual Suggestion:</em> Show a protein model with hydrophobic residues clustered in the center.</li>
+</ul>
+<li><strong>Hydrogen Bonds:</strong> Form between polar side chains and/or backbone atoms.</li>
+<ul class="nested-list">
+<li><em>Visual Suggestion:</em> Diagram illustrating hydrogen bond formation.</li>
+</ul>
+</ul>
+</ul>
+    </div>
+    
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-19" data-slide-number="19">
+    <div class="slide-header">
+        <span class="slide-number">19</span>
+    </div>
+    <h1 class="slide-title">Tertiary Structure: The Overall 3D Shape (Part 2)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Disulfide Bridges:</strong> Covalent bonds between cysteine side chains (strong!).</li>
+<ul class="nested-list">
+<li><em>Visual Suggestion:</em> Chemical structure showing a disulfide bond.</li>
+</ul>
+<li><strong>Ionic Bonds (Salt Bridges):</strong> Attraction between oppositely charged side chains.</li>
+<ul class="nested-list">
+<li><em>Visual Suggestion:</em> Illustration of a salt bridge.</li>
+</ul>
+<li><strong>Function Follows Form:</strong></li>
+<ul class="nested-list">
+<li>Tertiary structure dictates protein function by creating specific active sites or binding sites.</li>
+<li>Misfolding can lead to loss of function or disease (e.g., Alzheimer's).</li>
+<li><em>Example:</em> Myoglobin - a globular protein whose tertiary structure creates a heme-binding pocket for oxygen storage.</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-20" data-slide-number="20">
+    <div class="slide-header">
+        <span class="slide-number">20</span>
+    </div>
+    <h1 class="slide-title">Tertiary Structure: The Overall 3D Shape (Part 3)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><em>Visual Suggestion:</em> 3D structure of myoglobin highlighting the heme group.</li>
+</ul>
+<em>Note the visual suggestions in italics.</em>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-21" data-slide-number="21">
+    <div class="slide-header">
+        <span class="slide-number">21</span>
+    </div>
+    <h1 class="slide-title">Quaternary Structure: Multi-Subunit Complexes</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Quaternary Structure: Multi-Subunit Complexes</strong></li>
+<li><strong>Definition:</strong> Arrangement of multiple polypeptide chains (subunits) to form a functional protein complex.</li>
+<ul class="nested-list">
+<li>Subunits can be identical or different.</li>
+<li>Held together by non-covalent interactions (hydrophobic, electrostatic, hydrogen bonds).</li>
+<ul class="nested-list">
+<li>Sometimes stabilized by disulfide bonds.</li>
+</ul>
+</ul>
+</ul>
+    </div>
+    
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-22" data-slide-number="22">
+    <div class="slide-header">
+        <span class="slide-number">22</span>
+    </div>
+    <h1 class="slide-title">Quaternary Structure: Multi-Subunit Complexes (Part 2)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Key Points:</strong></li>
+<ul class="nested-list">
+<li>Not all proteins have quaternary structure. Only proteins with <em>multiple subunits</em> do.</li>
+<li>Subunit interactions are crucial for protein function and regulation.</li>
+<ul class="nested-list">
+<li>Cooperativity: Binding of a ligand to one subunit can affect the affinity of other subunits.</li>
+</ul>
+<li>Assembly can be complex, requiring specific protein domains or chaperone proteins.</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-23" data-slide-number="23">
+    <div class="slide-header">
+        <span class="slide-number">23</span>
+    </div>
+    <h1 class="slide-title">Quaternary Structure: Multi-Subunit Complexes (Part 3)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Examples:</strong></li>
+<ul class="nested-list">
+<li><strong>Hemoglobin:</strong> α₂β₂ tetramer. Oxygen binding to one subunit increases affinity for oxygen in other subunits. (Visual: Show hemoglobin structure with labeled subunits)</li>
+<li><strong>Antibodies (IgG):</strong> Two heavy chains and two light chains. (Visual: Show IgG structure with heavy and light chains)</li>
+<li><strong>DNA Polymerase:</strong> Multiple subunits work together to replicate DNA. (Visual: Simplified diagram of DNA polymerase complex at a replication fork)</li>
+</ul>
+<li><strong>Significance:</strong> Enables complex regulation, enhanced stability, and specialized functions.</li>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-24" data-slide-number="24">
+    <div class="slide-header">
+        <span class="slide-number">24</span>
+    </div>
+    <h1 class="slide-title">Quaternary Structure: Multi-Subunit Complexes (Part 4)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Visual Suggestions:</strong></li>
+<ul class="nested-list">
+<li>Cartoon representation of a multi-subunit protein complex (e.g., ribosome).</li>
+<li>Close-up view highlighting the interactions between subunits (hydrogen bonds, salt bridges, hydrophobic interactions).</li>
+<li>Diagram illustrating cooperativity in hemoglobin.</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-25" data-slide-number="25">
+    <div class="slide-header">
+        <span class="slide-number">25</span>
+    </div>
+    <h1 class="slide-title">Protein Backbone and Torsion Angles</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>The Protein Backbone: A Repeating Unit</strong></li>
+<ul class="nested-list">
+<li>Composed of repeating N-Cα-C units derived from amino acids.</li>
+<li>The peptide bond (between C and N) links amino acids together.</li>
+<li>This repeating structure forms the "backbone" from which side chains (R-groups) extend.</li>
+</ul>
+</ul>
+    </div>
+    
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-26" data-slide-number="26">
+    <div class="slide-header">
+        <span class="slide-number">26</span>
+    </div>
+    <h1 class="slide-title">Protein Backbone and Torsion Angles (Part 2)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Torsion Angles: Defining Conformation</strong></li>
+<ul class="nested-list">
+<li>Torsion angles (also called dihedral angles) describe the rotation around bonds in the backbone.</li>
+<li>Key angles:</li>
+<ul class="nested-list">
+<li><strong>Phi (Φ):</strong> Rotation around the N-Cα bond.</li>
+<li><strong>Psi (Ψ):</strong> Rotation around the Cα-C bond.</li>
+<li><strong>Omega (ω):</strong> Rotation around the C-N (peptide) bond. (Usually 180° (trans) or 0° (cis), with <em>trans</em> being heavily favored due to steric hindrance.)</li>
+</ul>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-27" data-slide-number="27">
+    <div class="slide-header">
+        <span class="slide-number">27</span>
+    </div>
+    <h1 class="slide-title">Protein Backbone and Torsion Angles (Part 3)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Steric Constraints and Favored Conformations</strong></li>
+<ul class="nested-list">
+<li>Not all combinations of phi and psi angles are possible.</li>
+<li>Steric clashes between atoms limit the allowed conformations.</li>
+<li>These allowed regions can be visualized on a Ramachandran plot.</li>
+</ul>
+<li><strong>Visual Suggestions:</strong></li>
+<ul class="nested-list">
+<li><strong>Image:</strong> Show a cartoon representation of a polypeptide chain, highlighting the N-Cα-C backbone and labeling Φ, Ψ, and ω angles.</li>
+<li><strong>Ramachandran Plot:</strong> Include a simplified Ramachandran plot, showing the allowed regions for phi and psi angles, and indicating where common secondary structures (alpha-helix, beta-sheet) fall.</li>
+<li><strong>3D Structure:</strong> Show a short peptide sequence rendered in 3D with the Torsion angles clearly displayed.</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-28" data-slide-number="28">
+    <div class="slide-header">
+        <span class="slide-number">28</span>
+    </div>
+    <h1 class="slide-title">The Ramachandran Plot: Mapping Allowed Conformations</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>What is it?</strong></li>
+<ul class="nested-list">
+<li>A graphical representation of allowed φ (phi) and ψ (psi) angles for amino acid residues in a protein.</li>
+<li>Each point on the plot represents a possible conformation of the protein backbone.</li>
+</ul>
+<li><strong>Why is it important?</strong></li>
+<ul class="nested-list">
+<li><strong>Structure Validation:</strong> Helps to validate experimentally determined protein structures (e.g., from X-ray crystallography or NMR).  Residues falling in disallowed regions suggest potential errors in the structure.</li>
+<li><strong>Structure Prediction:</strong> Guides <em>de novo</em> protein structure prediction by limiting the conformational space to explore.</li>
+<li><strong>Understanding Protein Flexibility:</strong> Shows which regions of the protein are more flexible (wider distribution of angles).</li>
+</ul>
+</ul>
+    </div>
+    
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-29" data-slide-number="29">
+    <div class="slide-header">
+        <span class="slide-number">29</span>
+    </div>
+    <h1 class="slide-title">The Ramachandran Plot: Mapping Allowed Conformations...</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Key Features:</strong></li>
+<ul class="nested-list">
+<li><strong>Regions of Allowed Conformations:</strong> Darker shaded regions indicate more favorable and frequently observed φ/ψ combinations.</li>
+<li><strong>Secondary Structure Correlation:</strong></li>
+<ul class="nested-list">
+<li><strong>Alpha-helices:</strong> Cluster in the lower left quadrant.</li>
+<li><strong>Beta-sheets:</strong> Cluster in the upper left quadrant.</li>
+<li><strong>Right-handed alpha helix:</strong> φ ≈ -57°, ψ ≈ -47°</li>
+<li><strong>Beta sheet:</strong> φ ≈ -139°, ψ ≈ 135°</li>
+</ul>
+</ul>
+<li><strong>Glycine Exception:</strong> Glycine, lacking a side chain, has greater conformational freedom and occupies a wider region of the plot.</li>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-30" data-slide-number="30">
+    <div class="slide-header">
+        <span class="slide-number">30</span>
+    </div>
+    <h1 class="slide-title">The Ramachandran Plot: Mapping Allowed Conformations...</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Proline Restriction:</strong> Proline's cyclic side chain restricts its φ angle, leading to a characteristic cluster on the plot.</li>
+</ul>
+<strong>Visual Suggestions:</strong>
+<ul class="elegant-list">
+<li>Show a Ramachandran plot itself, clearly labeled with phi and psi axes. Highlight the regions corresponding to alpha-helices and beta-sheets.</li>
+<li>Overlay example protein structures onto the plot, showing how the φ/ψ angles of their residues map onto the plot.</li>
+<li>Illustrate the structure of glycine and proline, explaining how their unique structures affect their allowed conformations.</li>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-31" data-slide-number="31">
+    <div class="slide-header">
+        <span class="slide-number">31</span>
+    </div>
+    <h1 class="slide-title">Forces Driving Protein Folding: Stability and Thermodynamics</h1>
+    <div class="content">
+        
+<h3 id="forces-driving-protein-folding-stability-and-thermodynamics">Forces Driving Protein Folding: Stability and Thermodynamics</h3>
+<ul class="elegant-list">
+<li><strong>Driving Forces:</strong> Several forces drive protein folding:</li>
+<ul class="nested-list">
+<li>Hydrophobic Interactions: Major force! Nonpolar amino acids cluster in the protein's interior to minimize contact with water.</li>
+<li>Hydrogen Bonds: Form between backbone atoms and side chains, stabilizing secondary and tertiary structures.</li>
+<li>Disulfide Bridges: Covalent bonds between cysteine residues, contributing to stability (especially in extracellular proteins).</li>
+</ul>
+<li><strong>Hydrophobic Effect:</strong></li>
+<ul class="nested-list">
+<li>Core principle: Increase in entropy of water molecules when nonpolar groups are sequestered from the aqueous environment.</li>
+<li>Hydrophobic collapse: Initial stage of folding, driven by this effect.</li>
+</ul>
+</ul>
+    </div>
+    
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-32" data-slide-number="32">
+    <div class="slide-header">
+        <span class="slide-number">32</span>
+    </div>
+    <h1 class="slide-title">Forces Driving Protein Folding: Stability and...</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Thermodynamic Stability:</strong></li>
+<ul class="nested-list">
+<li>Proteins fold to minimize their free energy (ΔG).</li>
+<li>Native state: The most stable, functional conformation with the lowest free energy.</li>
+<li>ΔG = ΔH - TΔS (Folding is often enthalpy-driven, with a negative ΔH from favorable interactions).</li>
+</ul>
+<li><strong>Example:</strong> Consider a protein with a large number of valine, leucine, and isoleucine residues. These amino acids are likely to be found in the protein core, shielded from water.</li>
+</ul>
+<strong>Visual Suggestions:</strong>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-33" data-slide-number="33">
+    <div class="slide-header">
+        <span class="slide-number">33</span>
+    </div>
+    <h1 class="slide-title">Forces Driving Protein Folding: Stability and...</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li>Image depicting hydrophobic amino acids clustering in the protein core.</li>
+<li>Diagram illustrating hydrogen bonding between different amino acids.</li>
+<li>Energy diagram showing the free energy change during protein folding, with the native state at the minimum.</li>
+<li>3D structure of a protein highlighting the hydrophobic core.</li>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-34" data-slide-number="34">
+    <div class="slide-header">
+        <span class="slide-number">34</span>
+    </div>
+    <h1 class="slide-title">The Protein Folding Problem: Levinthal's Paradox</h1>
+    <div class="content">
+        
+<h3 id="the-protein-folding-problem-levinthal-s-paradox">The Protein Folding Problem: Levinthal's Paradox</h3>
+<ul class="elegant-list">
+<li><strong>The Paradox:</strong> Predicting protein structure by randomly searching all possible conformations is computationally impossible.</li>
+<ul class="nested-list">
+<li>Proteins can explore an astronomical number of conformations.</li>
+<li>Even for a small protein (e.g., 100 amino acids), the number of possible conformations is estimated to be 3&lt;sup&gt;198&lt;/sup&gt;.</li>
+<li>Searching these conformations at nanosecond speed would take longer than the age of the universe!</li>
+</ul>
+<li><strong>Observed Reality:</strong> Proteins fold rapidly and efficiently <em>in vivo</em>.</li>
+<ul class="nested-list">
+<li>Folding often occurs within seconds or minutes.</li>
+<li>This suggests a <em>directed</em> folding pathway, not a random search.</li>
+</ul>
+</ul>
+    </div>
+    
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-35" data-slide-number="35">
+    <div class="slide-header">
+        <span class="slide-number">35</span>
+    </div>
+    <h1 class="slide-title">The Protein Folding Problem: Levinthal's Paradox (Part 2)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Implications:</strong></li>
+<ul class="nested-list">
+<li>Protein folding is <em>not</em> a trial-and-error process.</li>
+<li>Proteins must follow a specific, energetically favorable path.</li>
+<li>This implies the existence of folding mechanisms and guiding forces that reduce the conformational search space.</li>
+<li>Understanding these forces is critical for predicting protein structure.</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-36" data-slide-number="36">
+    <div class="slide-header">
+        <span class="slide-number">36</span>
+    </div>
+    <h1 class="slide-title">The Protein Folding Problem: Levinthal's Paradox (Part 3)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Visual Suggestion:</strong></li>
+<ul class="nested-list">
+<li>Diagram illustrating the vastness of the conformational space vs. the actual folding time.</li>
+<li>A simple chart comparing random search time to observed folding time.</li>
+<li>Cartoon depiction of a protein "searching" through a maze vs. following a clear path to the folded state.</li>
+<li>Show a "folding funnel" diagram with energy landscape illustrating that most proteins move downhill to the folded state.</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-37" data-slide-number="37">
+    <div class="slide-header">
+        <span class="slide-number">37</span>
+    </div>
+    <h1 class="slide-title">Anfinsen's Experiment: The Power of Primary Structure</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Anfinsen's Revelation:</strong> Primary structure dictates 3D shape.</li>
+<li><strong>The Experiment:</strong> Christian Anfinsen's Nobel Prize-winning work with Ribonuclease A.</li>
+<ul class="nested-list">
+<li><strong>Denaturation:</strong> Ribonuclease A unfolded using urea and beta-mercaptoethanol (to break disulfide bonds).</li>
+<li><strong>Refolding:</strong> Removal of denaturants allowed the protein to spontaneously refold.</li>
+<li><strong>Result:</strong> Full enzymatic activity regained! The protein returned to its native conformation.</li>
+</ul>
+</ul>
+    </div>
+    
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-38" data-slide-number="38">
+    <div class="slide-header">
+        <span class="slide-number">38</span>
+    </div>
+    <h1 class="slide-title">Anfinsen's Experiment: The Power of Primary Structure...</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Key Takeaway:</strong> All the information needed for correct folding is encoded in the amino acid sequence.</li>
+<li><strong>Impact:</strong> Revolutionized our understanding of protein folding; shifted focus to the importance of the primary sequence.</li>
+<li><strong>Visual Suggestions:</strong></li>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-39" data-slide-number="39">
+    <div class="slide-header">
+        <span class="slide-number">39</span>
+    </div>
+    <h1 class="slide-title">Anfinsen's Experiment: The Power of Primary Structure...</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li>Diagram illustrating the denaturation and refolding process of Ribonuclease A. Show the unfolded state, the removal of denaturants, and the refolded, active enzyme.</li>
+<ul class="nested-list">
+<li>3D model of Ribonuclease A, highlighting its active site.</li>
+<li>Include a photo of Christian Anfinsen.</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-40" data-slide-number="40">
+    <div class="slide-header">
+        <span class="slide-number">40</span>
+    </div>
+    <h1 class="slide-title">The Energy Landscape: A Funnel-like Model of Folding</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>The Energy Landscape: A Funnel-like Model of Folding</strong></li>
+<li><strong>Concept:</strong> Protein folding visualized as a funnel-shaped energy landscape.</li>
+<ul class="nested-list">
+<li>Illustrate with a diagram of a funnel. The Y-axis should represent energy, and the X-axis represents conformational space/folding pathway.</li>
+<li>The top of the funnel is wide, representing many unfolded states. The bottom is narrow, representing the native state.</li>
+</ul>
+</ul>
+    </div>
+    
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-41" data-slide-number="41">
+    <div class="slide-header">
+        <span class="slide-number">41</span>
+    </div>
+    <h1 class="slide-title">The Energy Landscape: A Funnel-like Model of Folding...</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Folding Process:</strong> Protein starts in a high-energy, unfolded state (top of the funnel) and progressively folds towards a low-energy, native state (bottom of the funnel).</li>
+<ul class="nested-list">
+<li>Use arrows within the funnel diagram to show the general direction of folding.</li>
+</ul>
+<li><strong>Funnel as a Guide:</strong> The funnel shape guides the protein through a series of intermediate states.</li>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-42" data-slide-number="42">
+    <div class="slide-header">
+        <span class="slide-number">42</span>
+    </div>
+    <h1 class="slide-title">The Energy Landscape: A Funnel-like Model of Folding...</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li>Mention that the landscape isn't perfectly smooth; there are local minima representing partially folded states. Illustrate this with "bumps" or "depressions" on the funnel's surface.</li>
+<li><strong>Avoiding Unproductive Pathways:</strong> The shape discourages unproductive folding routes.</li>
+<ul class="nested-list">
+<li>Visually show a few "dead-end" pathways that lead up the sides of the funnel, representing misfolded states or aggregation.</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-43" data-slide-number="43">
+    <div class="slide-header">
+        <span class="slide-number">43</span>
+    </div>
+    <h1 class="slide-title">The Energy Landscape: A Funnel-like Model of Folding...</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Key Takeaway:</strong> Protein folding is not a random search but a guided process driven by energy minimization.</li>
+<ul class="nested-list">
+<li>Briefly mention the role of chaperones in assisting folding and preventing aggregation (optional, if space allows).</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-44" data-slide-number="44">
+    <div class="slide-header">
+        <span class="slide-number">44</span>
+    </div>
+    <h1 class="slide-title">Conclusion: Structure Dictates Function</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Central Theme:</strong> Structure dictates function.</li>
+<li><strong>Key Takeaways:</strong></li>
+<ul class="nested-list">
+<li>Protein structure arises from its amino acid sequence + folding forces.</li>
+<li>3D shape is <em>critical</em> for function.</li>
+<ul class="nested-list">
+<li>Defines active/binding sites.</li>
+</ul>
+<li>Understanding structure unlocks therapeutic potential.</li>
+<ul class="nested-list">
+<li>Enables rational drug design.</li>
+</ul>
+</ul>
+</ul>
+    </div>
+    
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-45" data-slide-number="45">
+    <div class="slide-header">
+        <span class="slide-number">45</span>
+    </div>
+    <h1 class="slide-title">Conclusion: Structure Dictates Function (Part 2)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Examples:</strong></li>
+<ul class="nested-list">
+<li><strong>Enzymes:</strong> Active site shape precisely fits substrate. (Visual: Cartoon of enzyme active site binding substrate)</li>
+<li><strong>Antibodies:</strong> Variable region structure determines antigen specificity. (Visual: Antibody binding to antigen)</li>
+</ul>
+<li><strong>Impact:</strong></li>
+<ul class="nested-list">
+<li>Continual exploration reveals new insights into molecular biology.</li>
+<li>Structural biology is a dynamic and evolving field.</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide" id="slide-46" data-slide-number="46">
+    <div class="slide-header">
+        <span class="slide-number">46</span>
+    </div>
+    <h1 class="slide-title">Conclusion: Structure Dictates Function (Part 3)</h1>
+    <div class="content">
+        <ul class="elegant-list">
+<li><strong>Visual Suggestions:</strong></li>
+<ul class="nested-list">
+<li>3D protein structure (e.g., ribbon diagram).</li>
+<li>Graphic illustrating the relationship between protein folding and function.</li>
+<li>Molecular graphics visualizing a drug binding to a protein.</li>
+</ul>
+</ul>
+    </div>
+    <div class="slide-part-indicator">Multi-part slide</div>
+    <div class="slide-footer">
+        <div class="progress-indicator">
+            <div class="progress-bar" style="width: 0%"></div>
         </div>
     </div>
 </div>
 
     </div>
-    
+
     <div class="controls">
         <button class="control-button" id="prev-button" title="Previous slide">
             <i class="fas fa-chevron-left"></i>
@@ -771,18 +2157,27 @@
         <button class="control-button" id="fullscreen-button" title="Toggle fullscreen">
             <i class="fas fa-expand"></i>
         </button>
+        <button class="control-button" id="zoom-in-button" title="Zoom in">
+            <i class="fas fa-search-plus"></i>
+        </button>
+        <button class="control-button" id="zoom-out-button" title="Zoom out">
+            <i class="fas fa-search-minus"></i>
+        </button>
+        <button class="control-button" id="reset-zoom-button" title="Reset zoom">
+            <i class="fas fa-sync-alt"></i>
+        </button>
     </div>
-    
+
     <div class="theme-switcher">
         <button class="theme-button" id="theme-toggle">Change Theme</button>
     </div>
-    
+
     <script>
         // Slide navigation functionality
         const slides = document.querySelectorAll('.slide');
-        const totalSlides = 10;
+        const totalSlides = 46;
         let currentSlide = 0;
-        
+
         // Progress bar update
         function updateProgress() {
             const progressBars = document.querySelectorAll('.progress-bar');
@@ -790,80 +2185,173 @@
                 bar.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
             });
         }
-        
-        // Show the current slide
+
+        // Show the current slide with elegant transitions
         function showSlide(index) {
-            // Hide all slides
+            // Get previous slide index
+            const prevIndex = currentSlide;
+
+            // Hide all slides and remove transition classes
             slides.forEach(slide => {
-                slide.classList.remove('active');
+                slide.classList.remove('active', 'prev', 'next');
             });
-            
+
+            // Add appropriate transition classes
+            if (prevIndex !== index && prevIndex >= 0 && prevIndex < slides.length) {
+                if (prevIndex < index) {
+                    slides[prevIndex].classList.add('prev');
+                } else {
+                    slides[prevIndex].classList.add('next');
+                }
+            }
+
             // Show the current slide
             slides[index].classList.add('active');
-            
+
             // Update progress
             updateProgress();
+
+            // Reset zoom and auto-fit content for the new slide
+            resetZoom();
+            setTimeout(autoFitContent, 100);
+
+            // Add animation delay to content elements
+            const contentElements = slides[index].querySelectorAll('.content > *');
+            contentElements.forEach((element, i) => {
+                element.style.setProperty('--animation-order', i);
+            });
+
+            // Update document title with slide title
+            const slideTitle = slides[index].querySelector('.slide-title').textContent;
+            document.title = slideTitle + ' | Presentation';
         }
-        
+
         function nextSlide() {
             if (currentSlide < totalSlides - 1) {
                 currentSlide++;
                 showSlide(currentSlide);
             }
         }
-        
+
         function prevSlide() {
             if (currentSlide > 0) {
                 currentSlide--;
                 showSlide(currentSlide);
             }
         }
-        
-        // Theme switching functionality
-        const themes = ['default', 'dark', 'light', 'gradient'];
+
+        // Theme switching functionality with elegant themes
+        const themes = ['elegant-dark', 'elegant-light', 'royal-purple', 'ocean-blue', 'sunset'];
         let currentTheme = 0;
-        
+
         function switchTheme() {
             currentTheme = (currentTheme + 1) % themes.length;
             document.body.setAttribute('data-theme', themes[currentTheme]);
-            
+
             // Update CSS variables based on theme
             const themeColors = {
-                "default": {
-                    "background": "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+                "elegant-dark": {
+                    "background": "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)",
+                    "text": "#ffffff",
+                    "accent": "#0f3460",
+                    "secondary": "#e94560",
+                    "subtle_accent": "rgba(15, 52, 96, 0.2)",
+                    "highlight": "#f1c40f",
+                    "muted": "rgba(255, 255, 255, 0.7)",
+                    "shadow": "rgba(0, 0, 0, 0.2)"
+                },
+                "elegant-light": {
+                    "background": "linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%)",
                     "text": "#333333",
                     "accent": "#3498db",
-                    "secondary": "#2c3e50"
+                    "secondary": "#2ecc71",
+                    "subtle_accent": "rgba(52, 152, 219, 0.1)",
+                    "highlight": "#e74c3c",
+                    "muted": "rgba(0, 0, 0, 0.6)",
+                    "shadow": "rgba(0, 0, 0, 0.1)"
                 },
-                "dark": {
-                    "background": "linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%)",
+                "royal-purple": {
+                    "background": "linear-gradient(135deg, #2c2157 0%, #1e1646 100%)",
+                    "text": "#f5f5f5",
+                    "accent": "#8a4fff",
+                    "secondary": "#ff7eb6",
+                    "subtle_accent": "rgba(138, 79, 255, 0.2)",
+                    "highlight": "#ffcf5c",
+                    "muted": "rgba(245, 245, 245, 0.7)",
+                    "shadow": "rgba(0, 0, 0, 0.3)"
+                },
+                "ocean-blue": {
+                    "background": "linear-gradient(135deg, #f0f5f9 0%, #e4f0f5 100%)",
+                    "text": "#1e2022",
+                    "accent": "#1e5f74",
+                    "secondary": "#133b5c",
+                    "subtle_accent": "rgba(30, 95, 116, 0.1)",
+                    "highlight": "#fcdab7",
+                    "muted": "rgba(30, 32, 34, 0.7)",
+                    "shadow": "rgba(19, 59, 92, 0.1)"
+                },
+                "sunset": {
+                    "background": "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)",
                     "text": "#ffffff",
-                    "accent": "#e74c3c",
-                    "secondary": "#ecf0f1"
-                },
-                "light": {
-                    "background": "linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%)",
-                    "text": "#2c3e50",
-                    "accent": "#27ae60", 
-                    "secondary": "#7f8c8d"
-                },
-                "gradient": {
-                    "background": "linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)",
-                    "text": "#ffffff",
-                    "accent": "#ffd166",
-                    "secondary": "#f8f9fa"
+                    "accent": "#ff9a3c",
+                    "secondary": "#ff6a88",
+                    "subtle_accent": "rgba(255, 154, 60, 0.2)",
+                    "highlight": "#ffde7d",
+                    "muted": "rgba(255, 255, 255, 0.7)",
+                    "shadow": "rgba(0, 0, 0, 0.25)"
                 }
             };
-            
+
+            // Apply theme with smooth transition
+            document.body.style.transition = 'background 0.5s ease';
+
+            // Get the selected theme
             const selectedTheme = themeColors[themes[currentTheme]];
+
+            // Set all CSS variables
             document.documentElement.style.setProperty('--background', selectedTheme.background);
             document.documentElement.style.setProperty('--text-color', selectedTheme.text);
             document.documentElement.style.setProperty('--accent-color', selectedTheme.accent);
             document.documentElement.style.setProperty('--secondary-color', selectedTheme.secondary);
-            
-            document.getElementById('theme-toggle').textContent = `Theme: ${themes[currentTheme].charAt(0).toUpperCase() + themes[currentTheme].slice(1)}`;
+            document.documentElement.style.setProperty('--subtle-accent', selectedTheme.subtle_accent);
+            document.documentElement.style.setProperty('--highlight-color', selectedTheme.highlight);
+            document.documentElement.style.setProperty('--muted-text', selectedTheme.muted);
+            document.documentElement.style.setProperty('--shadow-color', selectedTheme.shadow);
+
+            // Format theme name for display
+            const themeName = themes[currentTheme].split('-').map(word =>
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
+
+            document.getElementById('theme-toggle').textContent = themeName;
+
+            // Add a visual feedback for theme change
+            const feedback = document.createElement('div');
+            feedback.className = 'theme-change-feedback';
+            feedback.textContent = 'Theme: ' + themeName;
+            feedback.style.position = 'fixed';
+            feedback.style.top = '50%';
+            feedback.style.left = '50%';
+            feedback.style.transform = 'translate(-50%, -50%)';
+            feedback.style.background = selectedTheme.accent;
+            feedback.style.color = selectedTheme.text;
+            feedback.style.padding = '1rem 2rem';
+            feedback.style.borderRadius = '30px';
+            feedback.style.boxShadow = '0 4px 20px ' + selectedTheme.shadow;
+            feedback.style.zIndex = '1000';
+            feedback.style.opacity = '0';
+            feedback.style.transition = 'opacity 0.3s ease';
+
+            document.body.appendChild(feedback);
+
+            // Show and hide feedback
+            setTimeout(() => { feedback.style.opacity = '1'; }, 50);
+            setTimeout(() => {
+                feedback.style.opacity = '0';
+                setTimeout(() => { document.body.removeChild(feedback); }, 300);
+            }, 1500);
         }
-        
+
         // Fullscreen functionality
         function toggleFullscreen() {
             if (!document.fullscreenElement) {
@@ -876,18 +2364,67 @@
                 }
             }
         }
-        
+
+        // Zoom functionality
+        let currentZoom = 1;
+        const MIN_ZOOM = 0.5;
+        const MAX_ZOOM = 2;
+        const ZOOM_STEP = 0.1;
+
+        function setZoom(zoomLevel) {
+            currentZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoomLevel));
+            document.querySelectorAll('.content').forEach(content => {
+                content.style.transform = `scale(${currentZoom})`;
+                content.style.transformOrigin = 'top left';
+            });
+        }
+
+        function zoomIn() {
+            setZoom(currentZoom + ZOOM_STEP);
+        }
+
+        function zoomOut() {
+            setZoom(currentZoom - ZOOM_STEP);
+        }
+
+        function resetZoom() {
+            setZoom(1);
+        }
+
+        // Auto-fit content if it overflows
+        function autoFitContent() {
+            const activeSlide = document.querySelector('.slide.active');
+            if (!activeSlide) return;
+
+            const content = activeSlide.querySelector('.content');
+            const slideHeight = activeSlide.clientHeight;
+            const titleHeight = activeSlide.querySelector('.slide-title').offsetHeight;
+            const footerHeight = activeSlide.querySelector('.slide-footer').offsetHeight;
+            const availableHeight = slideHeight - titleHeight - footerHeight - 120; // 120px for padding
+
+            if (content.scrollHeight > availableHeight) {
+                // Content is too tall, calculate zoom level to fit
+                const zoomFactor = availableHeight / content.scrollHeight;
+                if (zoomFactor < 1) {
+                    setZoom(Math.max(MIN_ZOOM, zoomFactor));
+                }
+            }
+        }
+
         // Initialize presentation
         function initPresentation() {
             // Show first slide
             showSlide(currentSlide);
-            
+
             // Add event listeners
             document.getElementById('next-button').addEventListener('click', nextSlide);
             document.getElementById('prev-button').addEventListener('click', prevSlide);
             document.getElementById('fullscreen-button').addEventListener('click', toggleFullscreen);
             document.getElementById('theme-toggle').addEventListener('click', switchTheme);
-            
+            document.getElementById('zoom-in-button').addEventListener('click', zoomIn);
+            document.getElementById('zoom-out-button').addEventListener('click', zoomOut);
+            document.getElementById('reset-zoom-button').addEventListener('click', resetZoom);
+
             // Add keyboard navigation
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'n') {
@@ -898,25 +2435,40 @@
                     toggleFullscreen();
                 } else if (e.key === 't') {
                     switchTheme();
+                } else if (e.key === '+' || e.key === '=') {
+                    zoomIn();
+                } else if (e.key === '-') {
+                    zoomOut();
+                } else if (e.key === '0') {
+                    resetZoom();
                 }
             });
-            
+
             // Animate content elements with delay
             const contentElements = document.querySelectorAll('.content > *');
             contentElements.forEach((element, index) => {
                 element.classList.add('fade-in');
                 element.style.animationDelay = `${index * 0.2}s`;
             });
-            
+
             // Set initial theme
-            document.getElementById('theme-toggle').textContent = `Theme: Default`;
-            
+            switchTheme(); // Apply the first theme
+
             // Initialize syntax highlighting for code blocks
             document.querySelectorAll('pre code').forEach((block) => {
                 hljs.highlightElement(block);
             });
+
+            // Auto-fit content if needed
+            setTimeout(autoFitContent, 500);
+
+            // Add resize listener to handle window size changes
+            window.addEventListener('resize', function() {
+                resetZoom();
+                setTimeout(autoFitContent, 200);
+            });
         }
-        
+
         // Run initialization when DOM is loaded
         document.addEventListener('DOMContentLoaded', initPresentation);
     </script>
