@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Artificial Intelligence: Past, Present, and Future</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .slide {
+            width: 100%;
+            height: 100vh;
+            padding: 2em;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.5em;
+        }
+        .content {
+            margin-top: 2em;
+        }
+        .navigation {
+            position: fixed;
+            bottom: 1em;
+            right: 1em;
+        }
+        button {
+            padding: 0.5em 1em;
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+
+<div class="slide" id="slide-1">
+    <h1>Introduction to AI</h1>
+    <div class="content">
+        - Definition of Artificial Intelligence
+- Brief history since the 1950s
+- Evolution from rule-based systems to machine learning
+    </div>
+</div>
+
+<div class="slide" id="slide-2">
+    <h1>Current AI Landscape</h1>
+    <div class="content">
+        - Deep learning breakthroughs
+- Computer Vision and NLP advances
+- Recent milestones (AlexNet, AlphaGo, GPT-3)
+    </div>
+</div>
+
+<div class="slide" id="slide-3">
+    <h1>Future of AI</h1>
+    <div class="content">
+        - Opportunities in healthcare, climate change, and science
+- Ethical challenges and concerns
+- Prospects for Artificial General Intelligence
+    </div>
+</div>
+
+<div class="slide" id="slide-4">
+    <h1>Conclusion</h1>
+    <div class="content">
+        - Summary of AI's transformative potential
+- Importance of responsible development
+- Call for collaboration across disciplines
+    </div>
+</div>
+
+    </div>
+    <div class="navigation">
+        <button onclick="prevSlide()">Previous</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        
+        // Hide all slides except the first one
+        function initSlides() {
+            for (let i = 1; i < slides.length; i++) {
+                slides[i].style.display = 'none';
+            }
+        }
+        
+        function showSlide(index) {
+            // Hide all slides
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = 'none';
+            }
+            // Show the current slide
+            slides[index].style.display = 'block';
+        }
+        
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+        
+        // Initialize slides
+        initSlides();
+        
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>

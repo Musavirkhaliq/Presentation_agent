@@ -1,0 +1,27 @@
+What are proteins? (Definition, biological importance) 
+
+Amino acids: structure, types, and properties 
+
+Peptide bonds and protein synthesis (translation process) 
+
+Overview of central dogma of molecular biology: DNA → RNA → Protein 
+
+Structures and What is the protein backbone? Role in defining 3D shape 
+
+Backbone torsion angles (ϕ, ψ, ω) and Ramachandran plot 
+
+Primary structure: amino acid sequence 
+
+Secondary structure: α-helices, β-sheets, loops 
+
+Tertiary structure: overall 3D shape 
+
+Quaternary structure: multimeric complexes 
+
+Forces driving protein folding: hydrogen bonds, disulfide bridges, hydrophobic packing 
+
+Levinthal’s Paradox 
+
+Anfinsen’s experiment 
+
+Thermodynamics of folding: energy landscapes, funnel model 
