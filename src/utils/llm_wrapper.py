@@ -4,6 +4,7 @@ LLM Wrapper for making API calls to language models.
 import os
 import json
 import random
+import base64
 from typing import Dict, List, Optional, Union, Any
 from pathlib import Path
 
@@ -27,6 +28,7 @@ class MockLLM:
     """
     def __init__(self):
         self.chat = self.ChatCompletions()
+        self.images = self.Images()
 
     class ChatCompletions:
         def create(self, model, messages, temperature=0.7, max_tokens=1000, response_format=None):
@@ -74,6 +76,21 @@ class MockLLM:
                 return MockResponse("This is mock slide content with bullet points:\n- Point 1\n- Point 2\n- Point 3")
             else:
                 return MockResponse("This is a mock response from the LLM.")
+
+    class Images:
+        """Mock Images class for testing image generation."""
+        def generate(self, model=None, prompt=None, size=None, quality=None, n=1):
+            """Mock image generation method."""
+            class MockImageData:
+                def __init__(self, url):
+                    self.url = url
+
+            class MockImageResponse:
+                def __init__(self, data):
+                    self.data = data
+
+            # Return a placeholder image URL
+            return MockImageResponse([MockImageData("https://placehold.co/1024x1024/EEE/31343C?text=Mock+Generated+Image")])
 
 class GeminiClient:
     """
@@ -307,3 +324,77 @@ class LLMWrapper:
             return {"error": f"Error parsing JSON response: {str(e)}", "raw_response": result}
         except Exception as e:
             return {"error": f"Error generating structured output: {str(e)}"}
+
+    def generate_image(self, prompt: str, size: str = "1024x1024") -> Optional[str]:
+        """
+        Generate an image using the language model's image generation capabilities.
+
+        Args:
+            prompt: The image generation prompt
+            size: Size of the image to generate (e.g., "1024x1024")
+
+        Returns:
+            URL or base64 data of the generated image, or None if generation failed
+        """
+        if self.use_mock:
+            # Return a placeholder image URL for testing
+            return "https://placehold.co/1024x1024/EEE/31343C?text=Mock+Generated+Image"
+
+        if self.provider == "gemini":
+            try:
+                # Check if the Gemini client has image generation capabilities
+                if hasattr(self.client.client, 'models') and hasattr(self.client.client.models, 'generate_content'):
+                    # Use Gemini's image generation
+                    from google import genai
+
+                    # Configure the generation config
+                    generation_config = genai.GenerationConfig(
+                        temperature=0.9,
+                    )
+
+                    # Generate the image
+                    response = self.client.client.models.generate_content(
+                        model="gemini-1.5-flash", # Use an appropriate model that supports image generation
+                        contents=prompt,
+                        generation_config=generation_config
+                    )
+
+                    # Extract the image URL or data
+                    if hasattr(response, 'candidates') and response.candidates:
+                        for candidate in response.candidates:
+                            if hasattr(candidate, 'content') and candidate.content:
+                                for part in candidate.content.parts:
+                                    if hasattr(part, 'file_data') and part.file_data:
+                                        # Return base64 data
+                                        mime_type = part.file_data.mime_type
+                                        data = part.file_data.data
+                                        return f"data:{mime_type};base64,{data}"
+
+                    # If we couldn't extract an image, return None
+                    print("No image data found in the response")
+                    return None
+                else:
+                    print("Gemini client does not support image generation")
+                    return None
+            except Exception as e:
+                print(f"Error generating image with Gemini: {str(e)}")
+                return None
+        elif self.provider == "openai":
+            try:
+                # Use OpenAI's DALL-E for image generation
+                response = self.client.images.generate(
+                    model="dall-e-3",
+                    prompt=prompt,
+                    size=size,
+                    quality="standard",
+                    n=1,
+                )
+
+                # Return the image URL
+                return response.data[0].url
+            except Exception as e:
+                print(f"Error generating image with OpenAI: {str(e)}")
+                return None
+        else:
+            print(f"Image generation not supported for provider: {self.provider}")
+            return None

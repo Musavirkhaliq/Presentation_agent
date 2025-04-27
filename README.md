@@ -7,6 +7,7 @@ A PocketFlow-based agent that creates presentations from input material. The age
 - Process input material to extract key information
 - Generate a structured outline for the presentation
 - Create individual slides with engaging content
+- Find and add relevant images from the web for each slide
 - Build a complete presentation in Markdown or HTML format
 - Support for reviewing the outline before creating the full presentation
 - Support for multiple LLM providers (Gemini and OpenAI)
@@ -67,6 +68,9 @@ python -m src.main --input input_material.txt --outline-only
 
 - For Gemini: Set `GEMINI_API_KEY` environment variable
 - For OpenAI: Set `OPENAI_API_KEY` environment variable
+- For additional image sources (optional):
+  - Pexels: Set `PEXELS_API_KEY` environment variable
+  - Pixabay: Set `PIXABAY_API_KEY` environment variable
 
 You can set these environment variables in your shell or create a `.env` file in the project root directory:
 
@@ -74,9 +78,13 @@ You can set these environment variables in your shell or create a `.env` file in
 # .env file
 GEMINI_API_KEY=your_gemini_api_key_here
 OPENAI_API_KEY=your_openai_api_key_here
+PEXELS_API_KEY=your_pexels_api_key_here
+PIXABAY_API_KEY=your_pixabay_api_key_here
 ```
 
 The application will automatically load environment variables from the `.env` file.
+
+Note: The image finder will work with Unsplash without any API key. Pexels and Pixabay are used as fallbacks if their API keys are provided.
 
 ### Gemini API Key and Models
 
@@ -127,9 +135,10 @@ result = presentation_maker.create_presentation(material, "my_presentation.md")
 outline = presentation_maker.get_outline(material)
 ```
 
-## Example
+## Examples
 
-See `examples/use_gemini.py` for a complete example of using the presentation maker with Gemini.
+- See `examples/use_gemini.py` for a complete example of using the presentation maker with Gemini.
+- See `examples/use_with_images.py` for an example that includes finding and adding images from the web for slides.
 
 ## Requirements
 

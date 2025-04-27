@@ -7,6 +7,7 @@ from pocketflow import Flow
 from src.nodes.material_processor import MaterialProcessor
 from src.nodes.outline_generator import OutlineGenerator
 from src.nodes.slide_creator import SlideCreator
+from src.nodes.image_finder import ImageFinder
 from src.nodes.presentation_builder import PresentationBuilder
 from src.utils.llm_wrapper import LLMWrapper
 from src.utils.presentation_utils import PresentationFormat, PresentationUtils
@@ -37,11 +38,12 @@ class PresentationMaker:
         self.material_processor = MaterialProcessor(self.llm_wrapper)
         self.outline_generator = OutlineGenerator(self.llm_wrapper)
         self.slide_creator = SlideCreator(self.llm_wrapper)
+        self.image_finder = ImageFinder(self.llm_wrapper)
         self.presentation_builder = PresentationBuilder(format_type=format_type)
 
         # Create the flow with connections
         # In PocketFlow, we use the >> operator to connect nodes
-        self.material_processor >> self.outline_generator >> self.slide_creator >> self.presentation_builder
+        self.material_processor >> self.outline_generator >> self.slide_creator >> self.image_finder >> self.presentation_builder
 
         # Create the flow with the start node
         self.flow = Flow(start=self.material_processor)
@@ -65,9 +67,16 @@ class PresentationMaker:
             # Create mock slides
             slides = []
             for slide_outline in outline["slides"]:
+                slide_content = "- " + "\n- ".join(slide_outline["key_points"])
+
+                # Add a mock image to each slide
+                image_path = "images/mock_image.jpg"
+                slide_content = f"\n\n![Illustration for {slide_outline['title']}]({image_path})\n\n" + slide_content
+
                 slides.append({
                     "title": slide_outline["title"],
-                    "content": "- " + "\n- ".join(slide_outline["key_points"])
+                    "content": slide_content,
+                    "image_path": image_path
                 })
 
             # Create the presentation
