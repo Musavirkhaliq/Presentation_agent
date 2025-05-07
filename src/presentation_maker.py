@@ -43,7 +43,10 @@ class PresentationMaker:
 
         # Create the flow with connections
         # In PocketFlow, we use the >> operator to connect nodes
-        self.material_processor >> self.outline_generator >> self.slide_creator >> self.image_finder >> self.presentation_builder
+        self.material_processor >> self.outline_generator >> self.slide_creator >> self.presentation_builder
+
+        # with image finder
+        # self.material_processor >> self.outline_generator >> self.slide_creator >> self.image_finder >> self.presentation_builder
 
         # Create the flow with the start node
         self.flow = Flow(start=self.material_processor)
@@ -110,10 +113,9 @@ class PresentationMaker:
 
         # Initialize the shared state with the input material
         shared = {"material": material}
-
         # Run the flow
         self.flow.run(shared)
-
+        
         # Check for errors
         if "error" in shared:
             return {"error": shared["error"]}

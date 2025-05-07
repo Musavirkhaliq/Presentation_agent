@@ -55,6 +55,8 @@ class MaterialProcessor(Node):
         5. Suggested tone and style for the presentation
         """
 
+        print(material)
+
         return {
             "material": material,
             "system_prompt": system_prompt,
